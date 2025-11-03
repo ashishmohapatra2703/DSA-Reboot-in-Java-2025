@@ -44,19 +44,19 @@ class Solution {
     }
 }
 
-//M-2 using sliding window + Deque -> T.C = O(n.k) 
+//M-2 using sliding window + Deque -> T.C = O(n) 
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
-        Deque<Integer> dq = new ArrayDeque<Integer>(); // Decreasing Order Monotonic Queue => MAX AT FRONT
+        Deque<Integer> dq = new ArrayDeque<Integer>(); // Decreasing Order Monotonic Queue => MAX AT FRONT, MIN AT REAR
         int n = nums.length;
         int[] maxInEachKSizeSubArray = new int[n-k+1]; // [0 ...to ....(n-k)] index
 
         for(int i=0; i<k; i++)
         { 
             while(!dq.isEmpty() && nums[i] > dq.peekLast()) {
-                dq.pollLast();  // create window of size K and only add potential max elements
+                dq.pollLast();   // remove not useful elements
             }
-            dq.addLast(nums[i]);
+            dq.addLast(nums[i]); // create window of size K & only add potential max elements
         }
         maxInEachKSizeSubArray[0] = dq.peekFirst();
 
@@ -66,7 +66,7 @@ class Solution {
                 dq.pollFirst();  // back subtract going out of the window
             }
             while (!dq.isEmpty() && nums[i] > dq.peekLast()) { // front add
-                dq.pollLast(); // Remove all elements smaller than the current number from the back == only add potential max elements
+                dq.pollLast(); // Remove all elements (from the back) smaller than the current number == only add potential max elements
             }
             dq.addLast(nums[i]);
             
