@@ -44,3 +44,40 @@ class Solution {
         visited[fromSrc] = false;
     }
 }
+
+
+//this works
+class Solution {
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        List<List<Integer>> allPathsResult = new ArrayList<>();
+        int V = graph.length;
+
+        ArrayList<Integer> pathSoFar = new ArrayList<>();
+        pathSoFar.add(0);
+
+        getAllPathsFromSrcToDest(graph, 0, V-1, allPathsResult, pathSoFar);
+        return allPathsResult;
+    }
+    private void getAllPathsFromSrcToDest(int[][] adjList, 
+                                    int fromSrc, int toDest, 
+                                    List<List<Integer>> allPaths, ArrayList<Integer> pathSoFar) {
+        if(fromSrc == toDest) {
+            allPaths.add(new ArrayList<>(pathSoFar));
+            return;
+        }
+
+        for(int srcNeighNode: adjList[fromSrc]) {
+            pathSoFar.add(srcNeighNode);
+            getAllPathsFromSrcToDest(adjList, srcNeighNode, toDest, allPaths, pathSoFar);
+            pathSoFar.remove(pathSoFar.size()-1);
+        }
+    }
+}
+
+/* Note: In case of a DAG
+(1) When problem demands “no node should be visited twice in a single path” 
+=> use visited[] array
+
+(2) To avoid recomputing subproblems
+=> Even without cycles, a DAG may have multiple parents pointing to the same child.
+=> use dp[]  */

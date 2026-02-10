@@ -13,6 +13,7 @@ Input: V = 4, E = 3, edges[][] = [[0, 1], [1, 2], [2, 3]]
 Output: false
 Explanation: No cycle in the graph. */
 
+//M-1 - using Recursive DFS
 class Solution {
     public boolean isCycle(int V, int[][] edges) 
     {
@@ -58,6 +59,64 @@ class Solution {
                     return true;
             } else if (visited[nearNode] && nearNode != parentNode) {
                 return true;
+            }
+        }
+        return false;
+    }
+}
+
+//M-2 - using BFS
+class Solution {
+    public boolean isCycle(int V, int[][] edges) 
+    {
+        ArrayList<ArrayList<Integer>> adjList = buildAdjList(V, edges);
+        boolean[] visited = new boolean[V];
+
+        for(int i=0; i<V; i++) {
+            if(!visited[i])
+                if(isCyclePresent(adjList, visited, i))
+                    return true;
+        }
+        return false;
+    }
+    
+    private ArrayList<ArrayList<Integer>> buildAdjList(int V, int[][] edges) {
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for(int i=0; i<V; i++) {
+            adj.add(new ArrayList<>());
+        }
+        
+        for(int[] e : edges) {
+            int u = e[0];
+            int v = e[1];
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+        return adj;
+    }
+    
+    private boolean isCyclePresent(ArrayList<ArrayList<Integer>> adjList, boolean[] visited, int startNodeOfCompo)
+    {
+        Queue<int[]> que = new ArrayDeque<>(); 
+        int[] currentNodeParentNodeCombo = new int[]{startNodeOfCompo, -1};
+        que.add(currentNodeParentNodeCombo);   //pushing first vertex in queue.
+        visited[startNodeOfCompo] = true; //mark first vertex as visited(true).
+        
+        while(!que.isEmpty())
+        {
+            int[] currentParentNodeCombo = que.poll();
+            int currentNode = currentParentNodeCombo[0];
+            int currentParentNode = currentParentNodeCombo[1];
+
+            for(int neigNode: adjList.get(currentNode)) //traversing over all the neighbours of currentNode
+            {
+                if(!visited[neigNode])
+                {
+                    que.add(new int[]{neigNode, currentNode});
+                    visited[neigNode] = true; //if they aren't visited, add to queue and mark them visited
+                } else if(visited[neigNode] == true && neigNode != currentParentNode) {
+                    return true;
+                }
             }
         }
         return false;

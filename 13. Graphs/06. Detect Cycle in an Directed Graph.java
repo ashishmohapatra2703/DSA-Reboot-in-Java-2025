@@ -55,7 +55,7 @@ class Solution {
             if(!visited[nearNode]) {
                 if(isCyclePresent(adjList, visited, isAncestor, nearNode))
                     return true;
-            } else if (visited[nearNode] && isAncestor[nearNode]) {
+            } else if (visited[nearNode] == true && isAncestor[nearNode] == true) {
                 return true;
             }
         }
