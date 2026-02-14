@@ -7,8 +7,7 @@ arr[] = {0, 0, 1, 1, 0}
 Output: 0 0 0 1 1    */
 
 class Solution {
-    void segregate0and1(int[] arr, int n) 
-    {
+    void segregate0and1(int[] arr, int n) {
         int end = n-1;
         int i = 0;
         int j = 0;
@@ -29,6 +28,35 @@ class Solution {
     // j....i-1 = 1s region (right Type-B region)
     // i to (n-1) = region of unknown (which goes on decreasing in traversal)
 
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
+
+
+// M2 - Two Pointers
+class Solution {
+    void segregate0and1(int[] arr) {
+        int l = 0;
+        int h = arr.length-1;
+
+        while (l < h) 
+        {
+            if (arr[l] == 0) {
+                l++;
+            } 
+            else if (arr[h] == 1) {
+                h--;
+            } 
+            else if (arr[l] == 1 && arr[h] == 0) {
+                swap(arr, l, h);
+                l++;
+                h--;
+            } 
+        }
+    }
     private void swap(int[] nums, int i, int j) {
         int temp = nums[i];
         nums[i] = nums[j];

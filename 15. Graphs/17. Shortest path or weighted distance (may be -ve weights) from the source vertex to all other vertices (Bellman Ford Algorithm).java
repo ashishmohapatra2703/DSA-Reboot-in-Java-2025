@@ -1,5 +1,11 @@
 /* https://www.geeksforgeeks.org/problems/distance-from-the-source-bellman-ford-algorithm/1
-*/
+Given an weighted graph with V vertices numbered from 0 to V-1 and E edges, represented by a 2d array edges[][], 
+where edges[i] = [u, v, w] represents a direct edge from node u to v having w edge weight. You are also given a source vertex src.
+
+Your task is to compute the shortest distances from the source to all other vertices. 
+If a vertex is unreachable from the source, its distance should be marked as 10^8. 
+Additionally, if the graph contains a negative weight cycle, 
+return [-1] to indicate that shortest paths cannot be reliably computed.  */
 
 // Dijkstra doesn't revisit those nodes which have already been marked as visited. 
 // If a shorter path exists through a longer route with negative edges, Dijkstra's will fail to handle it.
@@ -7,9 +13,9 @@
 // Dijkstra: “The first time I reach a node optimally, I’m done.”
 // Bellman–Ford: “I don’t trust anything until I’ve tried all possibilities enough times.”
 
-
 // Any shortest path has AT MOST V-1 edges. (e.g, straight line)
-// => in that case, Each iteration allows paths one edge longer to be considered.
+// => in that case, Each iteration allows paths one edge longer to be considered. 
+// => 1st iteration = 1st level neighbour from source relaxed, 2nd iteration  = 2nd level neighbour from source relaxed & so on ...
 // => repeating the relaxation process (V-1) times ensures that all possible paths b/w source and any other node have been covered.
 // No further improvement should be possible unless there is a negative cycle.
 
