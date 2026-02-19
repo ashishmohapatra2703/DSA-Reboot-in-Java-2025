@@ -22,21 +22,19 @@ class Solution {
         //Each key = prefix sum value
         //Each value = how many times that prefix sum has occurred
         int n = nums.length;
-        int prefSum = 0;
         int totalSubArrSumK = 0;
-        
-        for(int i=0; i<n; i++)
-        {
-            prefSum += nums[i];
-            
-            if (prefSum == k) {
-                totalSubArrSumK++;
-            } 
-            if (prefSumFreqMap.containsKey(prefSum-k) == true) {
-                totalSubArrSumK += prefSumFreqMap.get(prefSum-k);
-            }
 
-            prefSumFreqMap.put(prefSum, prefSumFreqMap.getOrDefault(prefSum,0)+1);
+        int prefSum = 0;
+        prefSumFreqMap.put(0, 1); //at index 0, empty subaray prefix, count 1 for prefSum=0
+
+        for(int i=1; i<=n; i++) {
+            prefSum += nums[i-1];
+
+            int keyToFind = prefSum-k; //CHECK IF APPEARED BEFORE
+            if (prefSumFreqMap.containsKey(keyToFind) == true) {
+                totalSubArrSumK += prefSumFreqMap.get(keyToFind);
+            }
+            prefSumFreqMap.put(prefSum, prefSumFreqMap.getOrDefault(prefSum,0)+1); //CURRENT SAVING
         }
         
         return totalSubArrSumK;
