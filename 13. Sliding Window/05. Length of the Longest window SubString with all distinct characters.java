@@ -73,7 +73,7 @@ while(i < size()){
 ----------------------------------------------
     else if(condition > k){
         while(condition > k){
-            // remove calculation for i
+            // remove calculation for j
             j++;
         }
         i++;

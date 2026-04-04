@@ -49,3 +49,39 @@ class Solution {
 
 
 //M-2 - 3 pointers Dutch national flag algorithm
+class Solution {
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    public void sortColors(int[] nums) {
+        // The dutch national flag algorithm 
+        // to sort the array of size n using three pointers: lo=0, mid=0 and hi=n-1 
+        // such that the array is divided into 4 parts -
+        
+        // arr[0 .. lo - 1] → All 0s
+        // arr[lo .. mid - 1] → All 1s
+        // arr[mid .. hi] → Unprocessed elements (unknown)
+        // arr[hi + 1 .. n - 1] → All 2s
+
+        int low = 0;
+        int high = nums.length-1;
+        int mid = 0;
+        
+        while(mid <= high) {
+            if(nums[mid] == 0) {
+                swap(nums, low, mid);
+                low++;
+                mid++;
+            }
+            else if(nums[mid] == 1) {
+                mid++;
+            }
+            else if(nums[mid] == 2) {
+                swap(nums, mid, high);
+                high--;
+            }
+        }
+    }
+}
