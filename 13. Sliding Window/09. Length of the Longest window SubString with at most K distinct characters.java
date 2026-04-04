@@ -49,3 +49,42 @@ public class Solution {
         return maxSubStrAtMostKDistinct;
 	}
 }
+
+
+//Similar Story Question
+//https://leetcode.com/problems/fruit-into-baskets/description/
+//where K = 2
+//Length of the longest SubArray with at most 2 distinct integers
+class Solution {
+    public int totalFruit(int[] fruits) {
+        HashMap<Integer, Integer> eleCount = new HashMap<>();
+        int i = 0;
+        int j = 0; // i>j, window size = (i-j+1)
+        int n = fruits.length;
+        int maxSubArrAtMost2Distinct = 0;
+
+        while(i<n)
+        {
+            int fruit1 = fruits[i]; //add
+            eleCount.put(fruit1, eleCount.getOrDefault(fruit1, 0) + 1);
+
+            if(eleCount.size() <= 2) { 
+                maxSubArrAtMost2Distinct = Math.max(i-j+1, maxSubArrAtMost2Distinct);
+                i++;
+            } else if(eleCount.size() > 2) {
+                while(eleCount.size() > 2)
+                {
+                    int fruit2 = fruits[j]; //remove
+                    eleCount.put(fruit2, eleCount.getOrDefault(fruit2, 0) - 1);
+                    if(eleCount.get(fruit2) == 0) {
+                        eleCount.remove(fruit2);
+                    }
+                    j++;    
+                }
+                i++;
+            }
+        }
+
+        return maxSubArrAtMost2Distinct;
+    }
+}
