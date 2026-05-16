@@ -1,4 +1,5 @@
-/* Given an m x n integer matrix matrix, 
+/* https://leetcode.com/problems/set-matrix-zeroes/description/
+Given an m x n integer matrix matrix, 
 if an element is 0, set its entire row and column to 0's.
 You must do it in place. S.C = O(1) */
 
@@ -29,8 +30,8 @@ class Solution {
         for(int i=1; i<m; i++) {
             for(int j=1; j<n; j++) {
                 if(matrix[i][j] == 0) {
-                    matrix[i][0] = 0; // that row start ele marked
-                    matrix[0][j] = 0; // that col start ele marked
+                    matrix[i][0] = 0; // that row_start_ele marked
+                    matrix[0][j] = 0; // that col_start_ele marked
                 }
             }
         }
